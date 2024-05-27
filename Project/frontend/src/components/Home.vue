@@ -6,7 +6,7 @@
           <div class="main-content">
             <router-view />
             <!-- <Navbar /> -->
-            <BottomBar />
+            <BottomBar/>
           </div>
             
         </div>
@@ -26,7 +26,7 @@
     },
     methods: {
       isSigned() {
-        return localStorage.getItem('user')
+        return localStorage.getItem('user');
       },
       textStyling(path) {
         return this.$route.fullPath === path ? "underline" : "noline"
@@ -49,7 +49,7 @@
       return {
         Popup: false,
         lockedRoutes: [],
-        publicRoutes: []
+        publicRoutes: [],
       }
     }
   }

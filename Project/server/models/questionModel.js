@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const User = sequelize.define("user", {
-        idUser:{
+    const Question = sequelize.define("question", {
+        idQuestion:{
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             },
         },
-        email:{
+        description:{
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
@@ -18,56 +18,73 @@ module.exports = (sequelize, DataTypes) => {
             },
             unique: true
         },
-        password:{
+        answer1:{
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        first_name:{
+        answer2:{
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        last_name:{
+        answer3:{
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate:{
+                notEmpty: true
+            }
+        },
+        answer4:{
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate:{
+                notEmpty: true
+            }
+        },
+        correctAnswer:{
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        age:{
+        explanation:{
             type: DataTypes.INTEGER,
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        streak:{
+        type_id:{
             type: DataTypes.INTEGER,
+            references: {
+                model: 'questionTypes',
+                key: 'idquestionType'
+            },
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        points:{
+        category_id:{
             type: DataTypes.INTEGER,
+            references: {
+                model: 'questionCategories',
+                key: 'idquestionCategory'
+            },
             allowNull: false,
             validate:{
                 notEmpty: true
             }
-        },
-        level:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate:{
-                notEmpty: true
-            }
-        },
+        }
+
+
     })
 
-    return User
+    return Question
 }

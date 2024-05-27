@@ -41,9 +41,11 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.users = require('./UsereModel.js')(sequelize, Sequelize.DataTypes)
-db.folders = require('./FoldereModel.js')(sequelize, Sequelize.DataTypes)
-db.files = require('./FileModel.js')(sequelize, Sequelize.DataTypes)
-db.userFileHas = require('./UserFile_HasModel.js')(sequelize, Sequelize.DataTypes)
-db.userFolderHas = require('./UserFolder_HasModel.js')(sequelize, Sequelize.DataTypes)
+db.questiontypes = require('./questionTypeModel.js')(sequelize, Sequelize.DataTypes)
+db.questioncategories = require('./questionCategoryModel.js')(sequelize, Sequelize.DataTypes)
+db.performances = require('./performanceModel.js')(sequelize, Sequelize.DataTypes)
+db. questions = require('./questionModel.js')(sequelize, Sequelize.DataTypes)
+db.userconditions = require('./userConditionModel.js')(sequelize, Sequelize.DataTypes)
+
 
 module.exports = db;

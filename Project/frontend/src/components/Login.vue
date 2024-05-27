@@ -3,14 +3,14 @@
       <p class="title">PocketOnco</p>
       <img class="loginImg" src="../assets/loginimg.png" alt="Folder" /><br>
       Email
-      <input type="text" v-model="username" placeholder=""><br>
+      <input type="text" v-model="email" placeholder=""><br>
       Senha
       <input type="password" v-model="password" placeholder=""><br>
-      <button class="buttonLogin" @click.prevent="Login(this.username, this.password)">Entrar</button>
+      <button class="buttonLogin" @click.prevent="Login(this.email, this.password)">Entrar</button>
     </form>
     <div>
       Ainda não tem conta?
-      <button class="buttonRegister" @click.prevent="Login(this.username, this.password)">Registe-se</button>
+      <button class="buttonRegister" @click.prevent="Login(this.email, this.password)">Registe-se</button>
     </div>
     <div class="mytextdiv">
       <div class="divider"></div>
@@ -21,7 +21,7 @@
     </div>
     <div>
       
-      <button class="buttonGoogle" @click.prevent="Login(this.username, this.password)">
+      <button class="buttonGoogle" @click.prevent="Login(this.email, this.password)">
         <img class="googleImg" src="../assets/google.png" alt="Folder" />
        Login com Google
       </button>
@@ -38,33 +38,38 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
       formSent: false,
       showMessage: ""
     }
   },
   methods: {
-    async Login(username, password) {
-      if (username === "" || password === "") {
+    async Login(email, password) {
+      if (email === "" || password === "") {
         this.formSent = false
         this.showMessage = "Fill all the fields"
       } else {
             try {
+              console.log(email, password)
             const response = await api({
                 method: 'post',
                 url: `/users/login`,
                 data: {
-                    "uname": username, 
+                    "email": email, 
                     "password": password
                 }
             })
             if (response.data && response.data.accessToken !== " ") {
-              localStorage.setItem('user', JSON.stringify(response.data.uname));
+              localStorage.setItem('email', JSON.stringify(response.data.email));
               localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
               localStorage.setItem('refreshToken', JSON.stringify(response.data.refreshToken));
               localStorage.setItem('idUser', JSON.stringify(response.data.idUser));
-              this.$router.push("/main")
+              localStorage.setItem('points', JSON.stringify(response.data.points));
+              localStorage.setItem('streak', JSON.stringify(response.data.streak));
+              localStorage.setItem('level', JSON.stringify(response.data.level));
+              console.log(response.data)
+              this.$router.push("/main2")
               this.showMessage = "login successful"
               this.formSent = true
             } else {
@@ -145,9 +150,6 @@ export default {
     color: #08394B;
     cursor: pointer;
     width: 60%;
-  }
-  .buttonGoogle:hover {
-    opacity: 0.7;
   }
 
   input {

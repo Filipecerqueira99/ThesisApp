@@ -17,11 +17,11 @@ const rootHello = async (ctx) => {
 // Adds a user to the DB. Usernames have to be unique
 const signUp = async (ctx) => {  
   try{
-    let validInputsErrors = await validateInputSignUp(ctx.request.body.uname, ctx.request.body.password)
+    let validInputsErrors = await validateInputSignUp(ctx.request.body.email, ctx.request.body.password)
     
     if(validInputsErrors == ""){
       let info = {
-        uname: ctx.request.body.uname,
+        email: ctx.request.body.email,
         password: await bcrypt.hash(ctx.request.body.password, 10)
       }
 
@@ -42,25 +42,25 @@ const signUp = async (ctx) => {
 // Verifies if the user exists on the DB with the incerted password
 const login = async (ctx) => {
   let info = {
-    uname: ctx.request.body.uname,
+    email: ctx.request.body.email,
     password: ctx.request.body.password,
   }
   try{
-    let userFound = await User.findOne({where: {uname: info.uname}});
+    let userFound = await User.findOne({where: {email: info.email}});
     if(userFound != null){ 
       const idUser = userFound.idUser
       const samePass = await bcrypt.compare(info.password, userFound.password);
       if(samePass){
-        const accessToken = await generateAccessToken(info.uname, idUser);
-        const refreshToken = await generateRefreshToken(info.uname, idUser);
-        ctx.body = {message: "User Logged In!", accessToken: accessToken, refreshToken: refreshToken, uname: info.uname, idUser: userFound.idUser};
+        const accessToken = await generateAccessToken(info.email, idUser);
+        const refreshToken = await generateRefreshToken(info.email, idUser);
+        ctx.body = {message: "User Logged In!", accessToken: accessToken, refreshToken: refreshToken, email: info.email, idUser: userFound.idUser, streak: userFound.streak, points: userFound.points, level: userFound.level};
       }
       else{
-        ctx.body = {message: "Wrong Password.", accessToken: " ", refreshToken: " ", uname: info.uname};
+        ctx.body = {message: "Wrong Password.", accessToken: " ", refreshToken: " ", email: info.email};
       }
     }
     else{
-      ctx.body = {message: "User does not exist.", accessToken: " ", refreshToken: " ", uname: info.uname};
+      ctx.body = {message: "User does not exist.", accessToken: " ", refreshToken: " ", email: info.email};
     }
   }catch(e){
     ctx.body = "Error: Something went wrong with the users' login"
@@ -84,7 +84,7 @@ const refreshUser = async (ctx) => {
     if (!claims) {
       ctx.throw(401);
     }
-    const accessToken = await generateAccessToken(claims.uname, claims.idUser);
+    const accessToken = await generateAccessToken(claims.email, claims.idUser);
 
     ctx.body = { accessToken: accessToken };
 
@@ -96,14 +96,14 @@ const refreshUser = async (ctx) => {
 }
 
 // Function to generate an access token
-const generateAccessToken = async (uname, idUser) => {
-  const accessToken = await jwt.sign({ uname: uname, idUser: idUser } , SECRET, { expiresIn: '10m' });
+const generateAccessToken = async (email, idUser) => {
+  const accessToken = await jwt.sign({ email: email, idUser: idUser } , SECRET, { expiresIn: '10m' });
   return accessToken;
 }
 
 // Function to generate a refresh token
-const generateRefreshToken = async (uname, idUser) => {
-  const refreshToken = await jwt.sign({ uname: uname, idUser: idUser }, REFRESH_SECRET);
+const generateRefreshToken = async (email, idUser) => {
+  const refreshToken = await jwt.sign({ email: email, idUser: idUser }, REFRESH_SECRET);
   return refreshToken;
 }
 
@@ -136,7 +136,7 @@ const getUser = async (ctx) =>{
 }
 
 
-async function validateInputSignUp(uname, password){
+async function validateInputSignUp(email, password){
   let error = "";
 
   // Validates if password has a minimum length of 6, if it has upper and lowercase, numbers and special characters
@@ -161,7 +161,7 @@ async function validateInputSignUp(uname, password){
     error += "Password should have at least 1 number.\n"
   }
 
-  let user = await User.findOne({where: {uname: uname}});
+  let user = await User.findOne({where: {email: email}});
   if(user != null){
     console.log("pass5");
     error += "Username already reserved. \n"

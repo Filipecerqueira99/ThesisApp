@@ -1,57 +1,54 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const File = sequelize.define("file", {
-        idFile:{
+    const Performance = sequelize.define("performance", {
+        idPerformance:{
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             allowNull: false,
             validate:{
                 notEmpty: true
-            }
+            },
         },
-        idFolder:{
+        correct_answers:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate:{
+                notEmpty: true
+            },
+            unique: true
+        },
+        wrong_answers:{
             type: DataTypes.INTEGER,
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        nameFile:{
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate:{
-                notEmpty: true
+        category_id:{
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'questioncategories',
+                key: 'idquestionCategory'
             },
-            unique: true            
-        },
-        contentFile:{
-            type: DataTypes.STRING,
-            defaultValue: "",
-            allowNull: false,
-            unique: false            
-        },
-        stateFile:{
-            type: DataTypes.STRING,
-            defaultValue: "Public",
-            isIn: [['Public', 'Private']],
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         },
-        owner:{
-            type: DataTypes.STRING,
+        user_id:{
+            type: DataTypes.INTEGER,
             references: {
                 model: 'users',
-                key: 'uname'
+                key: 'idUser'
             },
             allowNull: false,
             validate:{
                 notEmpty: true
             }
         }
+
     })
 
-    return File;
+    return Performance
 }

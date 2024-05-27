@@ -7,6 +7,11 @@ import CurrentSymptoms from '../components/CurrentSymptoms.vue'
 import Content from '../components/Content.vue'
 import ContentPublic from '../components/ContentPublic.vue'
 import NotFound from '../components/NotFound.vue'
+import MultipleChoice from '../components/MultipleChoice.vue'
+import TwoChoice from '../components/TwoChoice.vue'
+import DragMultipleChoice from '../components/DragMultipleChoice.vue'
+import OrderOptions from '../components/OrderOptions.vue'
+import Main2 from '../components/Main2.vue'
 
 
 
@@ -44,7 +49,38 @@ const routes = [
       component: CurrentSymptoms,
       showRoute: ['public', 'private']
     },
-
+    { 
+      path: '/multipleChoice', 
+      name: 'MultipleChoice',
+      component: MultipleChoice,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/twoChoice', 
+      name: 'TwoChoice',
+      component: TwoChoice,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/dragMultipleChoice', 
+      name: 'DragMultipleChoice',
+      component: DragMultipleChoice,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/orderOptions', 
+      name: 'OrderOptions',
+      component: OrderOptions,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/main2', 
+      name: 'Main2',
+      component: Main2,
+      showRoute: ['public', 'private']
+    },
+    
+    
     { 
       path: '/folders/:folderId', 
       name: 'Content',
