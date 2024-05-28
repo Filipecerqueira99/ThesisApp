@@ -44,7 +44,7 @@ db.users = require('./UsereModel.js')(sequelize, Sequelize.DataTypes)
 db.questiontypes = require('./questionTypeModel.js')(sequelize, Sequelize.DataTypes)
 db.questioncategories = require('./questionCategoryModel.js')(sequelize, Sequelize.DataTypes)
 db.performances = require('./performanceModel.js')(sequelize, Sequelize.DataTypes)
-db. questions = require('./questionModel.js')(sequelize, Sequelize.DataTypes)
+db.questions = require('./questionModel.js')(sequelize, Sequelize.DataTypes)
 db.userconditions = require('./userConditionModel.js')(sequelize, Sequelize.DataTypes)
 
 

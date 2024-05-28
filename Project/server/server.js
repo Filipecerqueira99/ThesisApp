@@ -10,6 +10,8 @@ const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 const { userRouter, publicUserRouter } = require('./routes/userRoutes.js'); // TODO: LATER ON REFACTOR THIS => THINK NOT NEEDED
 const { permissionRouter } = require('./routes/permissionRoutes.js');
+const { questionRouter, questionRouterPublic } = require('./routes/questionRoutes.js');
+
 const app = new Koa();
 const dbModels = require('./models');
 const url = require('url');
@@ -58,6 +60,11 @@ app.use(userRouter.allowedMethods());
 app.use(publicUserRouter.routes());
 app.use(publicUserRouter.allowedMethods());
 
+app.use(questionRouter.routes());
+app.use(questionRouter.allowedMethods());
+
+app.use(questionRouterPublic.routes());
+app.use(questionRouterPublic.allowedMethods());
 
 app.use(permissionRouter.routes());
 app.use(permissionRouter.allowedMethods());

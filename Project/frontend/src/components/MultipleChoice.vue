@@ -1,12 +1,12 @@
 <template>
-  <h2>O que é um tumor benigno?</h2>
+  <h2>{{ this.questionDescription }}</h2>
   Escolhe a opção correta<br>
   <div class="multipleChoice">
-    <button class="buttonAnswer" @click.prevent="Login(this.email, this.password)">Opção A</button><br>
-    <button class="buttonAnswer correct" @click.prevent="Login(this.email, this.password)">Opção A</button><br>
-    <button class="buttonAnswer" @click.prevent="Login(this.email, this.password)">Opção A</button><br>
-    <button class="buttonAnswer wrong" @click.prevent="Login(this.email, this.password)">Opção A</button><br>
-    <button class="buttonHelp" @click.prevent="Login(this.email, this.password)">Ajuda</button><br>
+    <button class="buttonAnswer" @click.prevent="action(1)">{{ this.lineA }}</button><br>
+    <button class="buttonAnswer correct" @click.prevent="action(2)">{{ this.lineB }}</button><br>
+    <button class="buttonAnswer" @click.prevent="action(3)">{{ this.lineC }}</button><br>
+    <button class="buttonAnswer" @click.prevent="action(4)">{{ this.lineD }}</button><br>
+    <button class="buttonHelp" @click.prevent="help()">Ajuda</button><br>
   </div>
 
   <div class="explanation">
@@ -22,27 +22,54 @@
 </template>
 
 <script>
-/* eslint-disable */
+import api from "../api/api.js";
+
 export default {
   name: "MultipleChoice",
   data() {
     return {
+      data: null,
+      questionDescription: "",
+      lineA: "",
+      lineB: "",
+      lineC: "",
+      lineD: "",
+      correctLine: 0,
+      explanation: 0,
+      tip: 0,
     };
   },
   async created() {
+    console.log("sdfsdfds")
     const response = await api({
-      method: 'post',
-      url: `/users/login`,
-      data: {
-        "email": email,
-        "password": password
-      }
+      method: 'get',
+      url: `/questions/randomMultipleOption`,
+      data: {}
     })
 
-    console.log(this.files)
+    console.log(response.data)
+    this.data = response.data
+    this.lineA = this.data.answer1;
+    this.lineB = this.data.answer2;
+    this.lineC = this.data.answer3;
+    this.lineD = this.data.answer4;
+    this.correctLine = this.data.correctAnswer;
+    this.questionDescription = this.data.description;
+    this.explanation = this.data.explanation;
+    this.tip = this.data.tip;
 
-    
   },
+  methods: {
+    action(number) {
+      console.log(number)
+      if(number == this.correctLine){
+        alert("correto!")
+      }
+    },
+    help() {
+      console.log("sdfsdf")
+    },
+  }
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

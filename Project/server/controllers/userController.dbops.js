@@ -41,6 +41,7 @@ const signUp = async (ctx) => {
 
 // Verifies if the user exists on the DB with the incerted password
 const login = async (ctx) => {
+  console.log("LOGIN FUNCT")
   let info = {
     email: ctx.request.body.email,
     password: ctx.request.body.password,
