@@ -1,17 +1,51 @@
 "use strict";
 const db = require("../models");
 const permissionsController = require('../controllers/permissionController.dbops');
+const {Where} = require("sequelize/lib/utils");
+const {Order} = require("sequelize/lib/model");
 
 // Create main Model
 const Question = db.questions;
 const User = db.users;
 
-// Gets a specific folder
+// Gets a random multiple option question
 const getRandomMultipleOptionQuestion = async (ctx) => {
     console.log("Get Random Question")
     try {
         let foundQuestion = await Question.findOne();
         ctx.body = foundQuestion;
+    } catch (e) {
+        ctx.body = "Error on accessing the specified Question.";
+        console.log(e);
+    }
+};
+
+// Gets 5 random questions
+const getFiveRandomQuestions = async (ctx) => {
+    try {
+        //console.log(Math.random())
+        let foundQuestion = await Question.findAll();
+
+
+        var i = 0;
+        var arrayQuestions = {};
+        var lastRandom = -1;
+        var listRandoms = [];
+
+        while (i < 5){
+            var numberRnd = Math.floor(Math.random() * foundQuestion.length);
+            if (numberRnd == lastRandom){
+                numberRnd = Math.floor(Math.random() * foundQuestion.length);
+            }
+            listRandoms.push(numberRnd)
+            arrayQuestions[i] = foundQuestion[numberRnd]
+            i++;
+        }
+        //console.log(arrayQuestions)
+        console.log(listRandoms)
+
+
+        ctx.body = arrayQuestions;
     } catch (e) {
         ctx.body = "Error on accessing the specified Question.";
         console.log(e);
@@ -329,6 +363,7 @@ async function validationsGetUserPublicFolders(nameUser, nameFolder) {
 
 module.exports = {
     getRandomMultipleOptionQuestion,
+    getFiveRandomQuestions,
     postFolderTo,
     updateStateFolder,
     getFoldersFromParent,

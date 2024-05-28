@@ -21,6 +21,8 @@ questionRouter
 questionRouterPublic
     .get('/folders/public/:nameUser/:nameFolder', questionController.getUserPublicFolders) // get users' public folders in the root (idFolder==0) or inside of another folder (idFolder==idFolder in table folder)
     .get('/questions/randomMultipleOption', questionController.getRandomMultipleOptionQuestion) //get a random question
+    .get('/questions/randomFiveQuestions', questionController.getFiveRandomQuestions) //get a random question
+
 
 
 module.exports = {questionRouterPublic, questionRouter };

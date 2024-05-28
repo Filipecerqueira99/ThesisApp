@@ -83,10 +83,12 @@ export default {
     this.points = JSON.parse(localStorage.getItem("points"));
     this.streak = JSON.parse(localStorage.getItem("streak"));
     this.level = JSON.parse(localStorage.getItem("level"));
+    localStorage.setItem('playGame', false);
   },
   methods: {
     dailyGame(){
         console.log("joguinho")
+        localStorage.setItem('numberAnswersCorrect', 0);
         this.$router.push("/multipleChoice")
     },
     tematicGame(category){

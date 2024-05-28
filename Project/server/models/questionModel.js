@@ -60,6 +60,13 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
+        tip:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate:{
+                notEmpty: true
+            }
+        },
         type_id:{
             type: DataTypes.INTEGER,
             references: {

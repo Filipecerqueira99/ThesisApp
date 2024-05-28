@@ -35,7 +35,13 @@ export default {
         },
         isSigned() {
             //console.log(localStorage.getItem('idUser'))
-            return localStorage.getItem('idUser')
+            if (localStorage.getItem('idUser')) {
+                if (localStorage.getItem('playGame') == "true") {
+                    return false;
+                }else{
+                    return true;
+                }
+            }
         },
         textStyling(path) {
             return this.$route.fullPath === path ? "underline" : "noline"
@@ -54,9 +60,9 @@ export default {
             }
             return getAvailable
         },
-        action(value){
-        console.log(value)
-    }
+        action(value) {
+            console.log(value)
+        }
     },
     data() {
         return {
