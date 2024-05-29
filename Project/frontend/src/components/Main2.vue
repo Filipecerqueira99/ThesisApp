@@ -86,10 +86,8 @@ export default {
     localStorage.setItem('playGame', false);
   },
   methods: {
-    dailyGame(){
-        console.log("joguinho")
-        localStorage.setItem('numberAnswersCorrect', 0);
-        this.$router.push("/multipleChoice")
+    dailyGame(){ 
+        this.$router.push("/beginGame")
     },
     tematicGame(category){
         console.log(category);

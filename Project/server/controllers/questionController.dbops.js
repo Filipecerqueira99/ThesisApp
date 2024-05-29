@@ -52,6 +52,38 @@ const getFiveRandomQuestions = async (ctx) => {
     }
 };
 
+// Gets 5 random questions from a specific Category
+const getFiveRandomQuestionsFromCategory = async (ctx) => {
+    try {
+        //console.log(Math.random())
+        let foundQuestion = await Question.findAll();
+
+
+        var i = 0;
+        var arrayQuestions = {};
+        var lastRandom = -1;
+        var listRandoms = [];
+
+        while (i < 5){
+            var numberRnd = Math.floor(Math.random() * foundQuestion.length);
+            if (numberRnd == lastRandom){
+                numberRnd = Math.floor(Math.random() * foundQuestion.length);
+            }
+            listRandoms.push(numberRnd)
+            arrayQuestions[i] = foundQuestion[numberRnd]
+            i++;
+        }
+        //console.log(arrayQuestions)
+        console.log(listRandoms)
+
+
+        ctx.body = arrayQuestions;
+    } catch (e) {
+        ctx.body = "Error on accessing the specified Question.";
+        console.log(e);
+    }
+};
+
 
 // TODO: WHEN POSTING TO A FOLDER WE NEED TO SEE IF THE USER AS PERMISSIONS TO POST INTO IT
 // TODO: WE NEED TO IMPLEMENT ROLLEBACK WHEN THERE IS AN ERROR INSERTING AN ARROW INTO userFolderHasCreated TABLE

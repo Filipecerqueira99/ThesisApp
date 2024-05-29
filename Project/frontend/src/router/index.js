@@ -12,6 +12,8 @@ import TwoChoice from '../components/TwoChoice.vue'
 import DragMultipleChoice from '../components/DragMultipleChoice.vue'
 import OrderOptions from '../components/OrderOptions.vue'
 import Main2 from '../components/Main2.vue'
+import BeginGame from '../components/BeginGame.vue'
+import EndGame from '../components/EndGame.vue'
 
 
 
@@ -79,7 +81,20 @@ const routes = [
       component: Main2,
       showRoute: ['public', 'private']
     },
+    { 
+      path: '/beginGame', 
+      name: 'BeginGame',
+      component: BeginGame,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/endGame', 
+      name: 'EndGame',
+      component: EndGame,
+      showRoute: ['public', 'private']
+    },
     
+
     
     { 
       path: '/folders/:folderId', 
