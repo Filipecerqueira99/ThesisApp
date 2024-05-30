@@ -11,7 +11,7 @@
 		<button class="buttonAnswer wrong" :style="{ border: isSelected == false ? '3px solid black' : '' }"
 			@click.prevent="changeTrueOrFalse(false)">Falso</button><br>
 
-		<button class="buttonHelp" @click.prevent="finishGame()">Selecionar</button><br><br>
+		<button class="buttonHelp" @click.prevent="finishGame()">Selecionar</button><br>
 		<button class="buttonHelp" @click.prevent="help()">{{ this.showHideHelp }}</button><br><br>
 		<div class="blockExplanation" v-if="this.showTip">
 			{{ this.tip }}
@@ -30,6 +30,7 @@
 
 	</div>
 
+	Progresso
 	<div class="outsideBorder">
 		<div class="insideBar" :style="{ width: this.progress }"></div>
 	</div>

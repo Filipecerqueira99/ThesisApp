@@ -56,8 +56,13 @@ const getFiveRandomQuestions = async (ctx) => {
 const getFiveRandomQuestionsFromCategory = async (ctx) => {
     try {
         //console.log(Math.random())
-        let foundQuestion = await Question.findAll();
+        let category_id = ctx.params.category_id;
+        console.log(category_id);
 
+
+        let foundQuestion = await Question.findAll(
+            {where: {category_id: category_id}}
+        );
 
         var i = 0;
         var arrayQuestions = {};
@@ -74,7 +79,7 @@ const getFiveRandomQuestionsFromCategory = async (ctx) => {
             i++;
         }
         //console.log(arrayQuestions)
-        console.log(listRandoms)
+        //console.log(listRandoms)
 
 
         ctx.body = arrayQuestions;
@@ -83,7 +88,6 @@ const getFiveRandomQuestionsFromCategory = async (ctx) => {
         console.log(e);
     }
 };
-
 
 // TODO: WHEN POSTING TO A FOLDER WE NEED TO SEE IF THE USER AS PERMISSIONS TO POST INTO IT
 // TODO: WE NEED TO IMPLEMENT ROLLEBACK WHEN THERE IS AN ERROR INSERTING AN ARROW INTO userFolderHasCreated TABLE
@@ -396,6 +400,9 @@ async function validationsGetUserPublicFolders(nameUser, nameFolder) {
 module.exports = {
     getRandomMultipleOptionQuestion,
     getFiveRandomQuestions,
+    getFiveRandomQuestionsFromCategory,
+
+    //antigo
     postFolderTo,
     updateStateFolder,
     getFoldersFromParent,

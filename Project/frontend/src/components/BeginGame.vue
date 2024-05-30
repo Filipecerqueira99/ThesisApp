@@ -74,25 +74,44 @@ export default {
     name: "BeginGame",
     data() {
         return {
-            userName: "",
+            userName: null,
         };
     },
     async created() {
-        this.userName = localStorage.getItem('email');
+        this.userName = localStorage.getItem('first_name');
         localStorage.setItem('playGame', true);
         localStorage.setItem('numberAnswersCorrect', 0);
     },
     methods: {
         async startGame() {
-            const response = await api({
-                method: 'get',
-                url: `/questions/randomFiveQuestions`,
-                data: {}
-            })
-            //console.log(response.data)
-            localStorage.setItem('questions', JSON.stringify(response.data));
-            localStorage.setItem('numberQuestion', 1);
-            this.gameModeChooser(response.data[0].type_id);
+            var category_id = parseInt(localStorage.getItem('tematicGame'));
+            
+            if (category_id > 0) {
+                console.log("tematico")
+                localStorage.setItem('tematicGame', 0);
+                const response = await api({
+                    method: 'get',
+                    url: `questions/getFiveRandomQuestionsFromCategory/${category_id}`,
+                    data: {}
+                })
+                console.log(response.data)
+                localStorage.setItem('questions', JSON.stringify(response.data));
+                localStorage.setItem('numberQuestion', 1);
+                this.gameModeChooser(response.data[0].type_id);
+            } else {
+                console.log("random")
+                const response = await api({
+                    method: 'get',
+                    url: `/questions/randomFiveQuestions`,
+                    data: {}
+                })
+                //console.log(response.data)
+                localStorage.setItem('questions', JSON.stringify(response.data));
+                localStorage.setItem('numberQuestion', 1);
+                this.gameModeChooser(response.data[0].type_id);
+            }
+
+
 
             //this.$router.push("/main2")
             //console.log(JSON.parse(localStorage.getItem('questions')));
@@ -100,14 +119,14 @@ export default {
         goBack() {
             this.$router.push("/main2")
         },
-        gameModeChooser(nextGameMode){
-            if(nextGameMode == 1){
+        gameModeChooser(nextGameMode) {
+            if (nextGameMode == 1) {
                 this.$router.push("/multipleChoice");
-            }else if(nextGameMode == 2){
+            } else if (nextGameMode == 2) {
                 this.$router.push("/twoChoice");
-            }else if(nextGameMode == 3){
+            } else if (nextGameMode == 3) {
                 this.$router.push("/dragMultipleChoice");
-            }else if(nextGameMode == 4){
+            } else if (nextGameMode == 4) {
                 this.$router.push("/orderOptions");
             }
         }

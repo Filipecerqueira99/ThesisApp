@@ -15,7 +15,7 @@
 			@click.prevent="action(3)">{{ this.lineC }}</button><br>
 		<button class="buttonAnswer" :style="{ border: isSelected == '4' ? '3px solid black' : '' }"
 			@click.prevent="action(4)">{{ this.lineD }}</button><br>
-		<button class="buttonHelp" @click.prevent="finishGame()">Escolher</button><br><br>
+		<button class="buttonHelp" @click.prevent="finishGame()">Escolher</button><br>
 		<button class="buttonHelp" @click.prevent="help()">{{ this.showHideHelp }}</button><br><br>
 		<div class="blockExplanation" v-if="this.showTip">
 			{{ this.tip }}
@@ -32,6 +32,7 @@
 	</div>
 
 	<!-- <button class="buttonHelp" @click.prevent="Login(this.email, this.password)">Seguinte</button><br> -->
+	Progresso
 	<div class="outsideBorder">
 		<div class="insideBar" :style="{ width: this.progress }"></div>
 	</div>

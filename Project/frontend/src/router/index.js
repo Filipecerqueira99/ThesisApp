@@ -14,6 +14,9 @@ import OrderOptions from '../components/OrderOptions.vue'
 import Main2 from '../components/Main2.vue'
 import BeginGame from '../components/BeginGame.vue'
 import EndGame from '../components/EndGame.vue'
+import UserProfile from '../components/UserProfile.vue'
+import UserStatus from '../components/UserStatus.vue'
+import Scoreboard from '../components/Scoreboard.vue'
 
 
 
@@ -95,6 +98,24 @@ const routes = [
     },
     
 
+    { 
+      path: '/userProfile', 
+      name: 'UserProfile',
+      component: UserProfile,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/userStatus', 
+      name: 'UserStatus',
+      component: UserStatus,
+      showRoute: ['public', 'private']
+    },
+    { 
+      path: '/scoreboard', 
+      name: 'Scoreboard',
+      component: Scoreboard,
+      showRoute: ['public', 'private']
+    },
     
     { 
       path: '/folders/:folderId', 

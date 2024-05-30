@@ -1,0 +1,14 @@
+<template>
+   <h1>User Status</h1>
+</template>
+
+<script>
+/* eslint-disable */
+export default {
+    name: "UserStatus",
+};
+</script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

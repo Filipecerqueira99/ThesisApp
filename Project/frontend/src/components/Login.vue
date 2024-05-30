@@ -62,6 +62,8 @@ export default {
             })
             if (response.data && response.data.accessToken !== " ") {
               localStorage.setItem('email', JSON.stringify(response.data.email));
+              localStorage.setItem('first_name', JSON.stringify(response.data.first_name));
+              localStorage.setItem('last_name', JSON.stringify(response.data.last_name));
               localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
               localStorage.setItem('refreshToken', JSON.stringify(response.data.refreshToken));
               localStorage.setItem('idUser', JSON.stringify(response.data.idUser));

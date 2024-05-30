@@ -3,7 +3,7 @@
         <div class="header">
             <div class="header-item">
                 <h3>Dias</h3>
-                <div class="value">{{ this.points }}</div>
+                <div class="value">{{ this.streak }}</div>
             </div>
             <div class="header-item">
                 <h3>Nível</h3>
@@ -11,7 +11,7 @@
             </div>
             <div class="header-item">
                 <h3>Pontos</h3>
-                <div class="value">{{ this.streak }}</div>
+                <div class="value">{{ this.points }}</div>
             </div>
         </div>
     </div>
@@ -26,46 +26,44 @@
     </div>
 
 
-    
+
 
     <div class="outsideBox">
         <div class="title">Temáticas</div>
         <div class="threelineBox">
-            <button class="buttonNav" @click.prevent="tematicGame('dor')">Dor<br>
+            <button class="buttonNav" @click.prevent="tematicGame(1)">Dor<br>
                 <img class="iconImg" src="../assets/symptoms/Dor.png" alt="Dor" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('dispneia')">Dispneia
+            <button class="buttonNav" @click.prevent="tematicGame(2)">Dispneia
                 <img class="iconImg" src="../assets/symptoms/Dispneia.png" alt="Dispneia" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('insónia')">Insónia
+            <button class="buttonNav" @click.prevent="tematicGame(3)">Insónia
                 <img class="iconImg" src="../assets/symptoms/Insonia.png" alt="Insonia" />
             </button>
         </div>
         <div class="threelineBox">
-            <button class="buttonNav" @click.prevent="tematicGame('fadiga')">Fadiga
+            <button class="buttonNav" @click.prevent="tematicGame(4)">Fadiga
                 <img class="iconImg" src="../assets/symptoms/Fadiga.png" alt="Fadiga" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('ansiedade')">Ansiedade
+            <button class="buttonNav" @click.prevent="tematicGame(5)">Ansiedade
                 <img class="iconImg" src="../assets/symptoms/Ansiedade.png" alt="Ansiedade" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('anorexia')">Anorexia
+            <button class="buttonNav" @click.prevent="tematicGame(6)">Anorexia
                 <img class="iconImg" src="../assets/symptoms/Anorexia.png" alt="Anorexia" />
             </button>
         </div>
         <div class="threelineBox">
-            <button class="buttonNav" @click.prevent="tematicGame('diarreia')">Diarreia
+            <button class="buttonNav" @click.prevent="tematicGame(7)">Diarreia
                 <img class="iconImg" src="../assets/symptoms/Diarreia.png" alt="Diarreia" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('obstipação')">Obstipação
+            <button class="buttonNav" @click.prevent="tematicGame(8)">Obstipação
                 <img class="iconImg" src="../assets/symptoms/Obstipação.png" alt="Obstipação" />
             </button>
-            <button class="buttonNav" @click.prevent="tematicGame('vómitos')">Vómitos
+            <button class="buttonNav" @click.prevent="tematicGame(9)">Vómitos
                 <img class="iconImg" src="../assets/symptoms/Vómitos.png" alt="Vómitos" />
             </button>
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -73,32 +71,33 @@
 export default {
     name: "Main2",
     data() {
-    return {
-      points: 0,
-      streak: 0,
-      level: 0,
-    };
-  },
-  async created() {
-    this.points = JSON.parse(localStorage.getItem("points"));
-    this.streak = JSON.parse(localStorage.getItem("streak"));
-    this.level = JSON.parse(localStorage.getItem("level"));
-    localStorage.setItem('playGame', false);
-  },
-  methods: {
-    dailyGame(){ 
-        this.$router.push("/beginGame")
+        return {
+            points: 0,
+            streak: 0,
+            level: 0,
+        };
     },
-    tematicGame(category){
-        console.log(category);
+    async created() {
+        this.points = JSON.parse(localStorage.getItem("points"));
+        this.streak = JSON.parse(localStorage.getItem("streak"));
+        this.level = JSON.parse(localStorage.getItem("level"));
+        localStorage.setItem('tematicGame', 0);
+        localStorage.setItem('playGame', false);
     },
-  },
+    methods: {
+        dailyGame() {
+            this.$router.push("/beginGame")
+        },
+        tematicGame(category_id) {
+            localStorage.setItem('tematicGame', category_id);
+            this.$router.push("/beginGame")
+        },
+    },
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.outsideBox{}
+.outsideBox {}
 
 .container {
     display: flex;

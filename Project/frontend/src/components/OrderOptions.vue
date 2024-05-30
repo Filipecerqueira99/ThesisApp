@@ -18,9 +18,9 @@
 			<div class="bottom">Menos importante</div>
 
 		</div>
-		<button class="buttonHelp" @click.prevent="finishGame()">Concluir</button><br><br>
-
+		<button class="buttonHelp" @click.prevent="finishGame()">Concluir</button><br>
 		<button class="buttonHelp" @click.prevent="help()">{{ this.showHideHelp }}</button><br><br>
+		
 		<div class="blockExplanation" v-if="this.showTip">
 			{{ this.tip }}
 		</div>
@@ -45,10 +45,10 @@
 				{{ this.explanation }}
 			</div>
 		</div>
-		<button class="buttonHelp" @click.prevent="nextGame()">Seguinte</button><br>
+		<button class="buttonNext" @click.prevent="nextGame()">Seguinte</button><br>
 	</div>
 
-
+	Progresso
 	<div class="outsideBorder">
 		<div class="insideBar" :style="{ width: this.progress }"></div>
 	</div>
@@ -412,6 +412,18 @@ export default {
 	color: white;
 	cursor: pointer;
 	width: 30%;
+}
+
+.buttonNext {
+	margin-top: 10px;
+	padding: 10px;
+	border-radius: 22px;
+	background-color: #095D7E;
+	border: 0;
+	color: white;
+	cursor: pointer;
+	width: 30%;
+	margin-bottom: 50px;
 }
 
 .answerCorrect {
