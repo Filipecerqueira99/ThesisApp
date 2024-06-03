@@ -55,9 +55,9 @@ export default {
     },
     async created() {
         this.idUser = localStorage.getItem('idUser');
-        this.email = localStorage.getItem('email');
-        this.firstname = localStorage.getItem('first_name');
-        this.lastname = localStorage.getItem('last_name');
+        this.email = localStorage.getItem('email').slice(1).slice(0, -1);
+        this.firstname = localStorage.getItem('first_name').slice(1).slice(0, -1);
+        this.lastname = localStorage.getItem('last_name').slice(1).slice(0, -1);
         this.age = localStorage.getItem('age');
 
 

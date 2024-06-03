@@ -1,22 +1,24 @@
 <template>
-    <div v-if="isSigned()">
-        <div class="outsideBox">
-            <button class="buttonNav selected" @click.prevent="action('/main2')">
-                <img class="iconImg" src="../assets/icons/home.png" alt="Home" />
-            </button>
-            <button class="buttonNav" @click.prevent="action('/userStatus')">
-                <img class="iconImg award" src="../assets/icons/award.png" alt="Home" />
-            </button>
-            <!-- <button class="buttonNav" @click.prevent="action("main")">
+    <div v-if="isSigned()" class="outsideBox">
+        <button class="buttonNav" :style="{ border: selectedPage == '/main2' ? '3px solid white' : '0px' }"
+            @click="action('/main2')">
+            <img class="iconImg" src="../assets/icons/home.png" alt="Home" />
+        </button>
+        <button class="buttonNav" :style="{ border: selectedPage == '/userStatus' ? '3px solid white' : '0px' }"
+            @click="action('/userStatus')">
+            <img class="iconImg award" src="../assets/icons/award.png" alt="Home" />
+        </button>
+        <!-- <button class="buttonNav" @click.prevent="action("main")">
                 <img class="iconImg" src="../assets/icons/ticket-detailed.png" alt="Home" />
             </button> -->
-            <button class="buttonNav" @click.prevent="action('/scoreboard')">
-                <img class="iconImg" src="../assets/icons/scoreboard.png" alt="Home" />
-            </button>
-            <button class="buttonNav" @click.prevent="action('/userProfile')">
-                <img class="iconImg" src="../assets/icons/user.png" alt="Home" />
-            </button>
-        </div>
+        <button class="buttonNav" :style="{ border: selectedPage == '/scoreboard' ? '3px solid white' : '0px' }"
+            @click="action('/scoreboard')">
+            <img class="iconImg" src="../assets/icons/scoreboard.png" alt="Home" />
+        </button>
+        <button class="buttonNav" :style="{ border: selectedPage == '/userProfile' ? '3px solid white' : '0px' }"
+            @click="action('/userProfile')">
+            <img class="iconImg" src="../assets/icons/user.png" alt="Home" />
+        </button>
     </div>
 </template>
 
@@ -24,6 +26,11 @@
 /* eslint-disable */
 export default {
     name: "BottomBar",
+    data() {
+        return {
+            selectedPage: "/main2",
+        }
+    },
     methods: {
         LogOut() {
             localStorage.removeItem('user');
@@ -43,32 +50,10 @@ export default {
                 }
             }
         },
-        textStyling(path) {
-            return this.$route.fullPath === path ? "underline" : "noline"
-        },
-        showPopup() {
-            this.Popup = !this.Popup
-        },
-        getAvailableRoutes() {
-            const getAvailable = []
-            const routes = this.$router.options.routes
-            console.log(routes)
-            if (this.isSigned()) {
-                routes.filter(route => route.showRoute.includes('private')).map(route => getAvailable.push(route))
-            } else {
-                routes.filter(route => route.showRoute.includes('public')).map(route => getAvailable.push(route))
-            }
-            return getAvailable
-        },
         action(value) {
+            this.selectedPage = value;
+            console.log(this.selectedPage)
             this.$router.push(value)
-        }
-    },
-    data() {
-        return {
-            Popup: false,
-            lockedRoutes: [],
-            publicRoutes: []
         }
     },
 }
@@ -76,6 +61,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .outsideBox {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 5;
+
     background: rgb(9, 93, 126);
     background: linear-gradient(90deg, rgba(9, 93, 126, 1) 0%, rgba(46, 134, 169, 1) 100%);
     border-radius: 30px;
@@ -90,6 +81,7 @@ export default {
     margin-left: 38px;
     margin-top: 2px;
     margin-bottom: 2px;
+    border-radius: 20px;
 }
 
 .iconImg {
