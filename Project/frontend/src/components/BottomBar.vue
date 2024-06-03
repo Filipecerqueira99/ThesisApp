@@ -1,19 +1,19 @@
 <template>
     <div v-if="isSigned()">
         <div class="outsideBox">
-            <button class="buttonNav selected" @click.prevent="action('main')">
+            <button class="buttonNav selected" @click.prevent="action('/main2')">
                 <img class="iconImg" src="../assets/icons/home.png" alt="Home" />
             </button>
-            <button class="buttonNav" @click.prevent="action('results')">
+            <button class="buttonNav" @click.prevent="action('/userStatus')">
                 <img class="iconImg award" src="../assets/icons/award.png" alt="Home" />
             </button>
             <!-- <button class="buttonNav" @click.prevent="action("main")">
                 <img class="iconImg" src="../assets/icons/ticket-detailed.png" alt="Home" />
             </button> -->
-            <button class="buttonNav" @click.prevent="action('scores')">
+            <button class="buttonNav" @click.prevent="action('/scoreboard')">
                 <img class="iconImg" src="../assets/icons/scoreboard.png" alt="Home" />
             </button>
-            <button class="buttonNav" @click.prevent="action('settings')">
+            <button class="buttonNav" @click.prevent="action('/userProfile')">
                 <img class="iconImg" src="../assets/icons/user.png" alt="Home" />
             </button>
         </div>
@@ -38,7 +38,7 @@ export default {
             if (localStorage.getItem('idUser')) {
                 if (localStorage.getItem('playGame') == "true") {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -61,7 +61,7 @@ export default {
             return getAvailable
         },
         action(value) {
-            console.log(value)
+            this.$router.push(value)
         }
     },
     data() {

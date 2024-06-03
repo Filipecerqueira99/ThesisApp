@@ -10,7 +10,7 @@
     </form>
     <div>
       Ainda não tem conta?
-      <button class="buttonRegister" @click.prevent="Login(this.email, this.password)">Registe-se</button>
+      <button class="buttonRegister" @click.prevent="signup()">Registe-se</button>
     </div>
     <div class="mytextdiv">
       <div class="divider"></div>
@@ -64,6 +64,7 @@ export default {
               localStorage.setItem('email', JSON.stringify(response.data.email));
               localStorage.setItem('first_name', JSON.stringify(response.data.first_name));
               localStorage.setItem('last_name', JSON.stringify(response.data.last_name));
+              localStorage.setItem('age', JSON.stringify(response.data.age));
               localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
               localStorage.setItem('refreshToken', JSON.stringify(response.data.refreshToken));
               localStorage.setItem('idUser', JSON.stringify(response.data.idUser));
@@ -86,6 +87,9 @@ export default {
       setTimeout(() => {
             this.showMessage = ""
         }, 5000)
+    },
+    signup(){
+
     }
   }
 }

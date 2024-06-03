@@ -17,21 +17,29 @@ const rootHello = async (ctx) => {
 
 // Adds a user to the DB. Usernames have to be unique
 const signUp = async (ctx) => {
+    console.log("chegou")
+    console.log(ctx.request.body)
     try {
-        let validInputsErrors = await validateInputSignUp(ctx.request.body.email, ctx.request.body.password)
+        //let validInputsErrors = await validateInputSignUp(ctx.request.body.email, ctx.request.body.password)
 
-        if (validInputsErrors == "") {
-            let info = {
-                email: ctx.request.body.email,
-                password: await bcrypt.hash(ctx.request.body.password, 10)
-            }
-
-            const userCreated = await User.create(info)
-            ctx.body = userCreated
-        } else {
+        //if (validInputsErrors == "") {
+        let info = {
+            email: ctx.request.body.email,
+            password: await bcrypt.hash(ctx.request.body.password, 10),
+            first_name: ctx.request.body.first_name,
+            last_name: ctx.request.body.last_name,
+            age: ctx.request.body.age,
+            streak: 1,
+            points: 0,
+            level: 1,
+        }
+        console.log(info)
+        const userCreated = await User.create(info)
+        ctx.body = userCreated
+        /*} else {
             ctx.body = validInputsErrors
             console.log("validInputsErrors: " + validInputsErrors);
-        }
+        }*/
     } catch (e) {
         ctx.body = "Error: Something went wrong with the users' signup"
         console.log(e)
@@ -62,6 +70,7 @@ const login = async (ctx) => {
                     idUser: userFound.idUser,
                     first_name: userFound.first_name,
                     last_name: userFound.last_name,
+                    age: userFound.age,
                     streak: userFound.streak,
                     points: userFound.points,
                     level: userFound.level
@@ -76,6 +85,72 @@ const login = async (ctx) => {
         ctx.body = "Error: Something went wrong with the users' login"
         console.log(e)
     }
+};
+
+//editar utilizador
+const editProfile = async (ctx) => {
+    console.log("chegou")
+    console.log(ctx.request.body)
+    try {
+        //let validInputsErrors = await validateInputSignUp(ctx.request.body.email, ctx.request.body.password)
+
+        //if (validInputsErrors == "") {
+
+        if (ctx.request.body.currentPassword != "") {
+            console.log("Alterou a password.")
+            let info = {
+                idUser: ctx.request.body.idUser,
+                email: ctx.request.body.email,
+                currentPassword: await bcrypt.hash(ctx.request.body.currentPassword, 10),
+                newPassword: await bcrypt.hash(ctx.request.body.newPassword, 10),
+                first_name: ctx.request.body.first_name,
+                last_name: ctx.request.body.last_name,
+                age: ctx.request.body.age,
+            }
+
+
+            let userFound = await User.findOne({where: {email: info.email}});
+            if (userFound.password == info.currentPassword) {
+                console.log(info)
+                const userUpdated = await User.update(
+                    {
+                        email: info.email,
+                        password: info.newPassword,
+                        first_name: info.first_name,
+                        last_name: info.last_name,
+                        age: info.age,
+                    },
+                    {where: {idUser: info.idUser}})
+
+                ctx.body = userUpdated
+            } else {
+                ctx.body = "Current Password está errada."
+            }
+        } else {
+            console.log("Não alterour password.")
+            let info = {
+                idUser: ctx.request.body.idUser,
+                email: ctx.request.body.email,
+                first_name: ctx.request.body.first_name,
+                last_name: ctx.request.body.last_name,
+                age: ctx.request.body.age,
+            }
+
+            const userUpdated = await User.update(
+                {
+                    email: info.email,
+                    first_name: info.first_name,
+                    last_name: info.last_name,
+                    age: info.age,
+                },
+                {where: {idUser: info.idUser}})
+            ctx.body = userUpdated
+        }
+    } catch (e) {
+        ctx.body = "Error: Something went wrong with the users' signup"
+        console.log(e)
+    }
+
 };
 
 const refreshUser = async (ctx) => {
@@ -185,11 +260,11 @@ const updateUserPoints = async (ctx) => {
     let points = ctx.request.body.points;
     let level = ctx.request.body.level;
 
-    if(points >= 100){
+    if (points >= 100) {
         points = 0;
         try {
             const levelUpdated = await User.update(
-                {level: level+1, points: 0},
+                {level: level + 1, points: 0},
                 {where: {idUser: idUser}}
             );
             ctx.body = "Parabéns subiste de nível! 🚀";
@@ -197,15 +272,15 @@ const updateUserPoints = async (ctx) => {
             ctx.body = "Something went wrong when updating the user level.";
             console.log(e);
         }
-    }else{
+    } else {
         try {
             const pointsUpdated = await User.update(
                 {points: points},
                 {where: {idUser: idUser}}
             );
-            if(points > 0){
+            if (points > 0) {
                 ctx.body = "Recebeste " + points + " pontos! Continua assim! 🎆";
-            }else{
+            } else {
                 ctx.body = "Recebeste 0 pontos! Na próxima certamente vai correr melhor! 🍀";
             }
 
@@ -250,11 +325,11 @@ const updateUserLevel = async (ctx) => {
 }
 
 
-
 module.exports = {
     rootHello,
     signUp,
     login,
+    editProfile,
     getUsers,
     getUser,
     refreshUser,

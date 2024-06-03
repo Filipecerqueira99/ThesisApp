@@ -22,7 +22,8 @@ userRouter
 
 publicUserRouter
     .post('/users/login', SignInlimiter, userController.login)
-    .post('/users/signup', SignInlimiter, userController.signUp)
+    .post('/users/signup', userController.signUp)
+    .post('/users/editprofile', userController.editProfile)
     .post('/users/refresh-token', userController.refreshUser)
     .post('/users/updateUserPoints/:idUser', userController.updateUserPoints)
     .post('/updateUserStreak/:idUser:streak', userController.updateUserStreak)
